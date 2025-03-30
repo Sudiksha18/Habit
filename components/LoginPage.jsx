@@ -21,7 +21,7 @@ const LoginPage = () => {
     e.preventDefault();
     // Add login logic here
     console.log('Login form submitted:', formData);
-    navigate('/dashboard'); // Navigate to dashboard after successful login
+    navigate('/team'); // Navigate to team page after successful login
   };
 
   return (
