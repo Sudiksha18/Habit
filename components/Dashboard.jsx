@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Add useNavigate
 import { Activity, Award, BarChart2, Medal, Plus, Grid, Users, Settings, LogOut } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Dashboard() {
+  const navigate = useNavigate(); // Add navigation hook
   const handleLogout = () => {
     // Implement logout logic here
     console.log('Logging out...');
@@ -40,25 +41,29 @@ function Dashboard() {
         <div className="user-info border-top pt-3 mt-auto">
           <p className="text-secondary small mb-1">Signed in as:</p>
           <p className="mb-1 fw-medium">User</p>
-          <p className="text-secondary small mb-3">B22AI014@kitsw.ac.in</p>
+          <p className="text-secondary small mb-3">user@gmail.com</p>
           <button onClick={handleLogout} className="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2">
             <LogOut size={16} />Log out
           </button>
         </div>
       </aside>
 
-      <main className="flex-grow-1 bg-light">
+      <main className="flex-grow-1 bg-white">
         <div className="container py-3">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
               <h1 className="h3 mb-0">Your Habits</h1>
               <p className="text-muted mb-0" style={{ fontSize: '1.2rem' }}>Track and manage your daily habits</p>
             </div>
-            <button className="btn btn-primary btn-sm d-flex align-items-center gap-2">
+            
+            <button 
+              onClick={() => navigate('/add-habit')} 
+              className="btn btn-primary btn-sm d-flex align-items-center gap-2"
+            >
               <Plus size={16} />
               Add New Habit
             </button>
-            
+
           </div>
 
           <div className="row g-3">
