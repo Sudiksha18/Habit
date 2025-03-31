@@ -6,7 +6,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleStartTracking = () => {
-    navigate('/signup');
+    navigate('/dashboard');
   };
 
   const handleTryDemo = () => {
@@ -18,7 +18,7 @@ const LandingPage = () => {
     <div className="landing-page">
       <nav className="navbar">
         <div className="nav-content">
-          <Link to="/" className="logo">HabitTrack</Link>
+          <Link to="/" className="logo">HabitTracker</Link>
           <div className="nav-buttons">
             <Link to="/login" className="login-btn">Login</Link>
             <Link to="/signup" className="signup-btn">Sign Up</Link>
@@ -36,7 +36,7 @@ const LandingPage = () => {
             Track, manage, and visualize your daily habits to create lasting positive<br />change in your life.
           </p>
           <div className="cta-buttons">
-            <Link to="/signup" className="get-started-btn">Get Started →</Link>
+            <Link to="/dashboard" className="get-started-btn">Get Started →</Link>
             <button className="try-demo-btn" onClick={handleTryDemo}>Try Demo</button>
           </div>
         </div>

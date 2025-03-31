@@ -45,7 +45,7 @@ function Settings() {
   return (
     <div className="dashboard-container">
       <aside className="sidebar bg-white border-end p-4 d-flex flex-column" style={{width: '250px'}}>
-        <h1 className="h5 mb-4 fw-semibold">HabitTrack</h1>
+        <h1 className="h5 mb-4 fw-semibold">HabitTracker</h1>
         <nav className="flex-grow-1">
           <ul className="nav flex-column">
             <li className="nav-item mb-2"><Link className="nav-link d-flex align-items-center gap-2 text-secondary" to="/dashboard"><FiGrid size={18} />Dashboard</Link></li>

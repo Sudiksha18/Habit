@@ -21,14 +21,14 @@ const LoginPage = () => {
     e.preventDefault();
     // Add login logic here
     console.log('Login form submitted:', formData);
-    navigate('/team'); // Navigate to team page after successful login
+    navigate('/dashboard'); // Navigate to dashboard after successful login
   };
 
   return (
     <div className="login-container">
       <nav className="navbar">
         <div className="nav-content">
-          <Link to="/" className="logo">HabitTrack</Link>
+          <Link to="/" className="logo">HabitTracker</Link>
         </div>
       </nav>
 
