@@ -3,9 +3,7 @@
 
 A modern habit tracking application built with React.js, Vite, and Bootstrap. Track your daily habits, visualize progress with charts, and stay motivated!
 
-![Habit Tracker Screenshot](./public/screenshot.png) <!-- Add your screenshot here -->
-
-## Features
+Features
 
 - Add, edit, and track daily habits
 - Visualize habit progress with interactive charts
@@ -13,28 +11,43 @@ A modern habit tracking application built with React.js, Vite, and Bootstrap. Tr
 - Set frequency (Daily, Weekly, Monthly)
 - Responsive design for all devices
 
-## Technologies Used
+ 
+Backend Technologies:
 
-- React.js
-- Vite
-- Bootstrap 5
-- Chart.js
-- React Icons
-- Lucide React Icons
+1. Node.js - Runtime environment
+2. Express.js - Web application framework
+3. MongoDB - NoSQL database
+4. Mongoose - MongoDB object modeling tool
+Frontend Technologies:
 
-## Installation
+1. React.js - Frontend framework
+2. React Router - Navigation
+3. CSS - Styling
+4. Bootstrap - UI components
+Development Tools:
+
+1. MongoDB Compass - Database management UI
+2. Postman - API testing
+3. npm - Package manager
+Key Libraries:
+
+1. cors - Cross-origin resource sharing
+2. dotenv - Environment variables management
+3. express.json() - Middleware for parsing JSON
+
+ Installation
 
 Follow these steps to set up the project locally:
 
-### Prerequisites
+Prerequisites
 
 - Node.js (v16 or higher)
 - npm (v8 or higher)
 
-### Setup Instructions
+ Setup Instructions
 
-1. **Clone the repository**:
-   ```bash
+1.Clone the repository:
+  
    git clone https://github.com/Sudiksha18/Habit.git
    cd Habit
 Install dependencies:
@@ -58,64 +71,21 @@ npm install --save-dev @types/react @types/react-dom
 npm run dev
 9. Production Build
 npm run build
-Recommended Installation Order:
-First install Vite+React (creates project structure)
+10. Download MongoDB Community Edition from:  
+   👉 [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
 
-Then install UI libraries (Bootstrap, Icons)
+ Run the installer and follow the setup instructions. Enable MongoDB as a Service.
+ After installation, verify it by running:
+ 
+   mongod --version
+11.Postman is used for testing backend APIs.
 
-Then add data visualization (Chart.js)
+ Windows /  macOS
+Download from:
+👉 https://www.postman.com/downloads/
 
-Finally add any additional utilities
+Install and open the application to start testing.
 
-Each command installs a specific technology:
-
-bootstrap for responsive layouts and components
-
-react-icons for popular icon sets
-
-chart.js + react-chartjs-2 for habit progress charts
-
-lucide-react for additional modern icons
-
-react-router-dom if you need multiple pages
-
-After installing all dependencies, run npm run dev to start the development server at http://localhost:5173
-
-Project Structure
-
-habit-tracker/
-├── public/              # Static files
-├── src/
-│   ├── assets/          # Images, styles
-│   ├── components/      # React components
-│   ├── pages/           # Page components
-│   ├── App.jsx          # Main application component
-│   └── main.jsx         # Application entry point
-├── .gitignore
-├── index.html
-├── package.json
-├── README.md
-└── vite.config.js
-
-
-### Key Features of this README:
-
-1. **Clear Installation Instructions**:
-   - Includes all necessary npm commands in the proper order
-   - Covers all dependencies (React, Vite, Bootstrap, Chart.js, Lucide)
-
-2. **Complete Setup Guide**:
-   - From cloning to running the dev server
-   - Includes the correct Vite dev server command (`npm run dev`)
-
-3. **Project Structure**:
-   - Helps new contributors understand the code organization
-
-4. **Technology Stack**:
-   - Clearly lists all major technologies used
-
-5. **Visual Elements**:
-   - Placeholder for screenshot (add your actual screenshot later)
 
 The instructions provided will help anyone set up the project with all required dependencies and run it locally using `npm run dev`.
 License
