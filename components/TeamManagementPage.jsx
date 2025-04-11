@@ -1,18 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { FiGrid, FiBarChart2, FiUsers, FiSettings, FiLogOut, FiPlus } from 'react-icons/fi';
 import './TeamManagementPage.css';
-import { FiSearch, FiPlus, FiGrid, FiBarChart2, FiUsers, FiSettings, FiLogOut } from 'react-icons/fi';
 
+// Add handleLogout function near the top with other functions
 const TeamManagementPage = () => {
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate();
+    const [showInviteModal, setShowInviteModal] = useState(false);
+    const [inviteData, setInviteData] = useState({ name: '', email: '' });
+    const [invitationStatus, setInvitationStatus] = useState('');
+    const [teamMembers, setTeamMembers] = useState([]);
 
-    // Logout handler
     const handleLogout = () => {
-        navigate('/'); // Redirect to the landing page
+        navigate('/');
+    };
+
+    // Add default team members
+    useEffect(() => {
+        // Load accepted team members and add default if empty
+        const invites = JSON.parse(localStorage.getItem('teamInvites') || '[]');
+        const acceptedMembers = invites.filter(invite => invite.status === 'accepted');
+        
+        if (acceptedMembers.length === 0) {
+            // Add default team members if none exist
+            const defaultMembers = [
+                {
+                    id: 1,
+                    name: 'Jamie Smith',
+                    email: 'jamie@example.com',
+                    status: 'accepted'
+                },
+                {
+                    id: 2,
+                    name: 'Morgan Lee',
+                    email: 'morgan@example.com',
+                    status: 'accepted'
+                }
+            ];
+            localStorage.setItem('teamInvites', JSON.stringify(defaultMembers));
+            setTeamMembers(defaultMembers);
+        } else {
+            setTeamMembers(acceptedMembers);
+        }
+    }, []);
+
+    const handleInvite = async (e) => {
+        e.preventDefault();
+        try {
+            setInvitationStatus('sending');
+            
+            const newInvite = {
+                id: Date.now(),
+                name: inviteData.name,
+                email: inviteData.email,
+                status: 'pending',
+                date: new Date().toISOString()
+            };
+
+            const invites = JSON.parse(localStorage.getItem('teamInvites') || '[]');
+            invites.push(newInvite);
+            localStorage.setItem('teamInvites', JSON.stringify(invites));
+
+            // Simulate email sending delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            setInvitationStatus('sent');
+            setTimeout(() => {
+                setShowInviteModal(false);
+                setInviteData({ name: '', email: '' });
+                setInvitationStatus('');
+            }, 1500);
+        } catch (error) {
+            setInvitationStatus('error');
+        }
     };
 
     return (
-        <div className="d-flex vh-100">
+        <div className="dashboard-container">
             <aside className="sidebar bg-white border-end p-4 d-flex flex-column" style={{width: '250px'}}>
                 <h1 className="h5 mb-4 fw-semibold">HabitTracker</h1>
                 <nav className="flex-grow-1">
@@ -24,9 +88,9 @@ const TeamManagementPage = () => {
                     </ul>
                 </nav>
                 <div className="user-info border-top pt-3 mt-auto">
-                    <p className="text-secondary small mb-1">Signed in as:</p>
+                    {/* <p className="text-secondary small mb-1">Signed in as:</p>
                     <p className="mb-1 fw-medium">User</p>
-                    <p className="text-secondary small mb-3">user@gmail.com</p>
+                    <p className="text-secondary small mb-3">user@gmail.com</p> */}
                     <button onClick={handleLogout} className="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"><FiLogOut size={16} />Log out</button>
                 </div>
             </aside>
@@ -35,76 +99,93 @@ const TeamManagementPage = () => {
                 <div className="d-flex justify-content-between align-items-center mb-5">
                     <div>
                         <h2 className="h3 mb-2 fw-semibold">Team</h2>
-                        <p className="text-muted mb-0" style={{color: '#667085'}}>Manage your team members and their access</p>
+                        <p className="text-muted mb-0">Manage your team members</p>
                     </div>
-                    <button className="btn btn-primary px-4 py-2 fw-medium d-flex align-items-center gap-2" style={{backgroundColor: '#111322', borderRadius: '8px'}}>
+                    <button 
+                        className="btn btn-dark d-flex align-items-center gap-2"
+                        onClick={() => setShowInviteModal(true)}
+                    >
                         <FiPlus size={18} />
                         Invite Team Member
                     </button>
                 </div>
 
-                <div className="position-relative mb-4">
-                    <FiSearch className="position-absolute top-50 translate-middle-y ms-3 text-muted" style={{fontSize: '1.1rem'}} />
-                    <input type="text" className="form-control ps-5" placeholder="Search team members..." />
-                </div>
-
                 <div className="row g-4">
-                    <div className="col-12 col-md-6 col-lg-4">
-                        <div className="card h-100 border-0 shadow-sm" style={{borderRadius: '16px'}}>
-                            <div className="card-body d-flex align-items-center gap-3 p-4">
-                                <div className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                                    <span className="fw-medium text-primary">AJ</span>
-                                </div>
-                                <div>
-                                    <h3 className="h6 mb-1 fw-semibold">Alex Johnson</h3>
-                                    <p className="text-muted small mb-1">Team Lead</p>
-                                    <p className="text-muted small mb-0">alex@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-12 col-md-6 col-lg-4">
-                        <div className="card h-100 border-0 shadow-sm" style={{borderRadius: '16px'}}>
-                            <div className="card-body d-flex align-items-center gap-3 p-4">
-                                <div className="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                                    <span className="fw-medium text-success">JS</span>
-                                </div>
-                                <div>
-                                    <h3 className="h6 mb-1 fw-semibold">Jamie Smith</h3>
-                                    <p className="text-muted small mb-1">Developer</p>
-                                    <p className="text-muted small mb-0">jamie@example.com</p>
+                    {teamMembers.map(member => (
+                        <div key={member.id} className="col-12 col-md-6 col-lg-4">
+                            <div className="card h-100 border-0 shadow-sm" style={{borderRadius: '16px'}}>
+                                <div className="card-body d-flex align-items-center gap-3 p-4">
+                                    <div className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
+                                        <span className="fw-medium text-primary">
+                                            {member.name.split(' ').map(n => n[0]).join('')}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h3 className="h6 mb-1 fw-semibold">{member.name}</h3>
+                                        <p className="text-muted small mb-0">{member.email}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="col-12 col-md-6 col-lg-4">
-                        <div className="card h-100 border-0 shadow-sm" style={{borderRadius: '16px'}}>
-                            <div className="card-body d-flex align-items-center gap-3 p-4">
-                                <div className="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                                    <span className="fw-medium text-info">ML</span>
-                                </div>
-                                <div>
-                                    <h3 className="h6 mb-1 fw-semibold">Morgan Lee</h3>
-                                    <p className="text-muted small mb-1">Designer</p>
-                                    <p className="text-muted small mb-0">morgan@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-12 col-md-6 col-lg-4">
-                        <div className="card h-100 border-0 bg-white" style={{borderRadius: '16px', border: '1px dashed #D0D5DD'}}>
-                            <div className="card-body d-flex flex-column align-items-center justify-content-center gap-2 p-4">
-                                <div className="rounded-circle bg-gray-50 d-flex align-items-center justify-content-center" style={{width: '40px', height: '40px'}}>
-                                    <FiPlus size={20} className="text-gray-600" />
-                                </div>
-                                <span className="text-gray-600 fw-medium">Add Team Member</span>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
+
+                {showInviteModal && (
+                    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content border-0 shadow">
+                                <div className="modal-header border-0">
+                                    <h5 className="modal-title">Invite Team Member</h5>
+                                    <button 
+                                        type="button" 
+                                        className="btn-close"
+                                        onClick={() => setShowInviteModal(false)}
+                                    ></button>
+                                </div>
+                                <form onSubmit={handleInvite}>
+                                    <div className="modal-body p-4">
+                                        <div className="mb-3">
+                                            <label className="form-label">Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter team member's name"
+                                                value={inviteData.name}
+                                                onChange={(e) => setInviteData({...inviteData, name: e.target.value})}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label className="form-label">Email address</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                placeholder="Enter email address"
+                                                value={inviteData.email}
+                                                onChange={(e) => setInviteData({...inviteData, email: e.target.value})}
+                                                required
+                                            />
+                                        </div>
+                                        {invitationStatus === 'error' && (
+                                            <div className="alert alert-danger">Failed to send invitation. Please try again.</div>
+                                        )}
+                                    </div>
+                                    <div className="modal-footer border-0">
+                                        <button 
+                                            type="submit" 
+                                            className="btn btn-dark w-100"
+                                            disabled={invitationStatus === 'sending'}
+                                        >
+                                            {invitationStatus === 'sending' ? 'Sending...' : 
+                                             invitationStatus === 'sent' ? 'Invitation Sent!' : 
+                                             'Send Invitation'}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );

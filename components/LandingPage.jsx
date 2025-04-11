@@ -6,13 +6,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleStartTracking = () => {
-    navigate('/dashboard');
+    navigate('/login');
   };
 
-  const handleTryDemo = () => {
-    // Add demo functionality or navigate to demo page
-    console.log('Demo functionality to be implemented');
-  };
+  // Remove handleTryDemo function
 
   return (
     <div className="landing-page">
@@ -36,8 +33,8 @@ const LandingPage = () => {
             Track, manage, and visualize your daily habits to create lasting positive<br />change in your life.
           </p>
           <div className="cta-buttons">
-            <Link to="/dashboard" className="get-started-btn">Get Started →</Link>
-            <button className="try-demo-btn" onClick={handleTryDemo}>Try Demo</button>
+            <Link to="/signup" className="get-started-btn">Get Started →</Link>
+            {/* Remove try-demo button */}
           </div>
         </div>
       </main>

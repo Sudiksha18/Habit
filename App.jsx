@@ -1,27 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import SignupPage from './components/SignupPage';
-import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
 import Statistics from './components/Statistics';
-import Team from './components/TeamManagementPage.jsx';
+import TeamManagementPage from './components/TeamManagementPage';
 import Settings from './components/Settings';
-import AddHabitModal from './components/AddHabitModal';
+import LandingPage from './components/LandingPage';
+import InvitationPage from './components/InvitationPage';
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/get-started" element={<SignupPage />} />
-        <Route path="/start-tracking" element={<SignupPage />} />
-        <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/add-habit" element={<AddHabitModal />} />  // Corrected route path
         <Route path="/statistics" element={<Statistics />} />
-        <Route path="/team" element={<Team />} />
+        <Route path="/team" element={<TeamManagementPage />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/invitation" element={<InvitationPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

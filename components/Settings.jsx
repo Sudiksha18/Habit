@@ -55,9 +55,9 @@ function Settings() {
           </ul>
         </nav>
         <div className="user-info border-top pt-3 mt-auto">
-          <p className="text-secondary small mb-1">Signed in as:</p>
+          {/* <p className="text-secondary small mb-1">Signed in as:</p>
           <p className="mb-1 fw-medium">User</p>
-          <p className="text-secondary small mb-3">user@gmail.com</p>
+          <p className="text-secondary small mb-3">user@gmail.com</p> */}
           <button onClick={() => navigate('/')} className="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"><FiLogOut size={16} />Log out</button>
         </div>
       </aside>

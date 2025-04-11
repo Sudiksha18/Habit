@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './SignupPage.css';
+import axios from 'axios';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -19,16 +20,27 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    // Add signup logic here
-    console.log('Form submitted:', formData);
-    navigate('/dashboard');
+  
+    try {
+      const response = await axios.post('http://localhost:5001/api/signup', {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
+  
+      alert(response.data.message);
+      navigate('/login');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Signup failed');
+    }
   };
+
 
   return (
     <div className="signup-container">

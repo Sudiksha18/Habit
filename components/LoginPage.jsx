@@ -8,6 +8,7 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -17,11 +18,32 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log('Login form submitted:', formData);
-    navigate('/dashboard'); // Navigate to dashboard after successful login
+    setError('');
+    try {
+      const response = await fetch('http://localhost:5001/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Login successful
+        console.log('Login successful:', data);
+        navigate('/dashboard');
+      } else {
+        // Login failed
+        setError(data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -35,6 +57,8 @@ const LoginPage = () => {
       <div className="login-form">
         <h2>Login</h2>
         <p>Enter your email and password to access your account</p>
+
+        {error && <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
